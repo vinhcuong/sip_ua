@@ -259,6 +259,14 @@ class SIPUAHelper extends EventManager {
             stream: e.stream, originator: e.originator));
       });
     });
+    //xử lý switch mode
+    eventHandlers.on(EventSwitchMode(), (EventSwitchMode e) async {
+      // Wating for callscreen ready.
+      Timer(Duration(milliseconds: 100), () {
+        _notifyCallStateListeners(CallState(CallStateEnum.STREAM,
+            stream: e.stream, originator: e.originator));
+      });
+    });
     eventHandlers.on(EventCallRefer(), (EventCallRefer refer) async {
       logger.debug('Refer received, Transfer current call to => ${refer.aor}');
       _notifyCallStateListeners(CallState(CallStateEnum.REFER, refer: refer));

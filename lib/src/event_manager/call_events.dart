@@ -82,6 +82,12 @@ class EventStream extends EventType {
   MediaStream stream;
   EventStream({this.originator, this.stream});
 }
+//tạo thêm class để phục vụ chức năng switch mode
+class EventSwitchMode extends EventType {
+  String originator;
+  MediaStream stream;
+  EventSwitchMode({this.originator, this.stream});
+}
 
 class EventCallRefer extends EventType {
   String aor;

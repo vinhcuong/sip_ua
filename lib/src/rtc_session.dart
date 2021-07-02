@@ -611,6 +611,7 @@ class RTCSession extends EventManager {
     }
 
     // Attach MediaStream to RTCPeerconnection.
+    //Add Stream vào luồng gọi
     this._localMediaStream = stream;
     if (stream != null) {
       this._connection.addStream(stream);
@@ -969,6 +970,34 @@ class RTCSession extends EventManager {
     if (audioMuted == true || videoMuted == true) {
       this._onmute(audioMuted, videoMuted);
     }
+  }
+
+  switchMode() async {
+    Map<String, dynamic> mediaConstraints = {
+      "audio": true,
+      "video": {
+        "mandatory": {
+          "minWidth": '640',
+          "minHeight": '480',
+          "minFrameRate": '30',
+          // "minWidth": "1280",
+          // "maxWidth": "1280",
+          // "minHeight": "720",
+          // "maxHeight": "720",
+          // "minFrameRate": '60',
+        },
+        "facingMode": "user",
+        "optional": List<dynamic>(),
+      }
+    };
+    var stream;
+    stream = await navigator.getUserMedia(mediaConstraints);
+    this.emit(EventSwitchMode(originator: 'local', stream: stream));
+
+    this._connection.onAddStream = (stream) {
+      this.emit(EventStream(originator: 'remote', stream: stream));
+    };
+    _toggleSwitchMode();
   }
 
   /**
@@ -2797,6 +2826,16 @@ class RTCSession extends EventManager {
         var track = stream.getAudioTracks()[0];
         track.enabled = !mute;
       }
+    });
+  }
+
+  _toggleSwitchMode() {
+    List<MediaStream> streams = this._connection.getLocalStreams();
+    streams.forEach((stream) {
+      // if (stream.getVideoTracks().isNotEmpty) {
+        var track = stream.getVideoTracks()[0];
+        track.enabled = true;
+      // }
     });
   }
 
