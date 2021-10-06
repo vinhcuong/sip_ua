@@ -31,7 +31,7 @@ class DialogRequestSender {
     this._reattemptTimer = null;
   }
 
-  OutgoingRequest get request => this._request;
+  OutgoingRequest get request => _request;
 
   send() {
     EventManager localEventHandlers = EventManager();
