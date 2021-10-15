@@ -19,7 +19,8 @@ dependencies:
   sdp_transform: ^0.3.2
   uuid: ^3.0.5
   random_string: ^2.3.1
-  logger: ^0.9.4
+#  logger: ^1.0.0
+  logger: ^0.7.0+2
   intl: ^0.17.0
   recase: ^4.0.0
   path: ^1.8.0
