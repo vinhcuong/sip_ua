@@ -2820,7 +2820,9 @@ class RTCSession extends EventManager {
   _connecting(request) {
     logger.debug('session connecting');
     logger.debug('emit "connecting"');
-    this.emit(EventCallConnecting(request: request));
+    logger.debug('new call id ${_request.call_id.toString()}');
+
+    this.emit(EventCallConnecting(request: request, call_id: _request.call_id.toString()));
   }
 
   _progress(originator, response) {
