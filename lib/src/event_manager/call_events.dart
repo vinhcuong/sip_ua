@@ -11,7 +11,9 @@ class EventNewRTCSession extends EventType {
 }
 
 class EventCallConnecting extends EventType {
-  EventCallConnecting({dynamic request});
+  dynamic request;
+  String call_id;
+  EventCallConnecting({this.request, this.call_id});
 }
 
 class EventCallEnded extends EventType {
